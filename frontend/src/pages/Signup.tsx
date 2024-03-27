@@ -1,7 +1,25 @@
-import React from 'react'
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import React, { useState } from "react"
+import { auth } from "../firebase/config";
+import { useNavigate } from "react-router-dom";
 
 export const Signup = () => {
-  return <form>
+const navigate = useNavigate();
+const [email, setEmail] = useState<string>('');
+const [password, setPassword] = useState<string>('');
+const [error, setError] = useState<string>('');
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+e.preventDefault();
+
+try {
+  await createUserWithEmailAndPassword(auth, email, password);
+navigate('/');
+} catch (error) {
+  setError(error.message)
+}
+}
+  return <form onSubmit={handleSubmit}>
+    {error && error}
     <div className="hero min-h-screen bg-base-200">
   <div className="hero-content flex-col lg:flex-row-reverse">
     <div className="text-center lg:text-left">
@@ -14,19 +32,19 @@ export const Signup = () => {
           <label className="label">
             <span className="label-text">Email</span>
           </label>
-          <input type="email" placeholder="email" className="input input-bordered" required />
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email" className="input input-bordered" required />
         </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text">Password</span>
           </label>
-          <input type="password" placeholder="password" className="input input-bordered" required />
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="password" className="input input-bordered" required />
           <label className="label">
             <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
           </label>
         </div>
         <div className="form-control mt-6">
-          <button className="btn btn-primary">Login</button>
+          <button className="btn btn-primary">Sign up</button>
         </div>
       </form>
     </div>
