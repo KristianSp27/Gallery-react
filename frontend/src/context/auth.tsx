@@ -32,9 +32,10 @@ return unsubscribe;
     const value = {
         user,
         isLoading
-    }
+    };
+
     return (
-        <AuthContext.Provider value={}>
+        <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
     )
