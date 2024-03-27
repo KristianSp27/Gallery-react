@@ -51,4 +51,6 @@ navigate('/');
   </div>
 </div>
   </form>
-}
+};
+
+export default Signup;
